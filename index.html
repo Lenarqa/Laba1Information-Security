@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Лабораторная работа №1</title>
+</head>
+<body>
+    <div class="container">
+        <div class="list">
+            <div class="item">
+                <h2>В какую сторону сдвиг</h2>
+                <select id="leftRight" class="list">
+                    <option value="left">Влево</option>
+                    <option value="right">Вправо</option>
+                </select>
+            </div>
+            <div class="item">
+                <h2>Шаг</h2>
+                <input type="text" placeholder="введите шаг числом" id="step">
+            </div>
+            <div class="item">
+                <h2>Выберите файл</h2>
+                <h2>Важно: файл должен быть типа txt и сохранен в кодировке UTF-8</h2>
+                <input type="file">
+            </div>
+            <div id="main"></div>
+        </div>
+    </div>
+
+    <script src="./js/file.js"></script>
+</body>
+</html>

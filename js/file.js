@@ -46,7 +46,7 @@ function Encrypt(clearInputText) {
                 console.log("clearInputText.length = " + clearInputText.length);
                 console.log("clearInputText[0].length = " + clearInputText[0].length);
 
-                for (let j = 0; j < clearInputText[0].length; j++) {
+                for (let j = 0; j < clearInputText[i].length; j++) {
                     let letterIndex = letters.indexOf(clearInputText[i][j].toUpperCase());
                     console.log(letterIndex)
 
@@ -79,52 +79,51 @@ function Encrypt(clearInputText) {
             }
             console.log("==== result ==== ");
             console.log(res);
-
-            // console.log("res = " + res);
-            // for (let i = 0; i < clearInputText.length; i++) {
-            //     for (let j = 0; j < clearInputText[i].length; j++) {
-            //         // console.log("1. clear test = " + [j] + " " + clearInputText[i][j]);
-            //         let index = letters.indexOf(clearInputText[i][j].toUpperCase());
-            //         console.log(`index = ${index}`);
-                   
-            //         if(index == 0 && clearInputText[i][j] != ' ') {
-            //             // console.log("(index == 0) || (index - step == 0)")
-            //             res.push(letters[letters.length - step]);
-            //         }else if ((index - step == 0) && (clearInputText[i][j] != ' ')){
-            //             res.push(letters[index - step]);
-            //         }else if(((index - step) < 0) && (clearInputText[i][j] != ' ')) {
-            //             let tempIndex = index;
-
-            //             // console.log('temp index = ' + tempIndex);
-                        
-            //             let leftStep = 0;
-            //             while(tempIndex >= 0){
-            //                 leftStep++;
-            //                 tempIndex--;
-            //             }
-            //             // console.log("temp Index = " + tempIndex)
-
-            //             index = letters.length + (index-leftStep);
-                        
-            //             // console.log("new index = " + index + " letters = " +  letters[index])
-            //             res.push(letters[index]);
-            //         }else if(clearInputText[i][j] == ' '){
-            //             res.push('*');
-            //         }else{
-            //             outputText[i][j] = letters[index - step];
-            //             res.push(letters[index - step]);
-            //             // console.log(letters[index - step]);
-            //         }
-            //     }
-            // }
-
-            // res.pop(); // убираем знак переноса строки
-            // console.log(res);
             break;
 
         case 'right':
-            
-            break;
+            console.log('----- right -----');
+
+            for (let i = 0; i < clearInputText.length; i++) {
+                console.log("clearInputText= " + clearInputText);
+                // console.log("clearInputText[0].length = " + clearInputText[0].length);
+                // console.log('letter lenght = ' + letters.length);
+                // console.log('letter[32] = ' + letters[32]);
+                console.log('begin');
+
+                for (let j = 0; j < clearInputText[i].length; j++) {
+                    let letterIndex = letters.indexOf(clearInputText[i][j].toUpperCase());
+                    // console.log(letterIndex)
+
+                    if(letterIndex == 32 && clearInputText[i][j] != ' ') {
+                        console.log('letterIndex == 0');
+                        res[i][j] = letters[step-1];
+                        console.log(res);
+                    }else if((letterIndex + Number.parseInt(step) == 32) && (clearInputText[i][j] != ' ')) {
+                        console.log('letterIndex + step == 32');
+                        res[i][j] = letters[32];
+                        console.log(res);
+                    }else if ((letterIndex + Number.parseInt(step) > 32) && (clearInputText[i][j] != ' ')) {
+                        console.log('letterIndex + step > 32');
+                        let newLetterIndex = 0;
+                        newLetterIndex = (letterIndex + Number.parseInt(step)) - 32;
+                        console.log("letterIndex = " + letterIndex);
+                        console.log("Step = " +  step);
+                        console.log("newLetterIndex = " + newLetterIndex);
+                        res[i][j] = letters[newLetterIndex];
+                        console.log(res);
+
+                    }else if(clearInputText[i][j] == ' '){
+                        res[i][j] = '*';
+                    }else {
+                        res[i][j] = letters[letterIndex + Number.parseInt(step)];
+                    }
+                }
+            }
+            console.log("==== result ==== ");
+            console.log(res);
+
+        break;
     }
 
     return outputText;

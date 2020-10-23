@@ -32,44 +32,30 @@ input.addEventListener('change', (e)=>{
 
 function Encrypt(clearInputText) {
     let res = [[]];
-    let outputText = clearInputText.map(i => i);
     let letters = ['А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С', 'Т', 
         'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'];
 
     let letfRight = document.getElementById('leftRight').value; //получаем направление;
     let step = document.getElementById('step').value; //получаем шаг
-    // console.log('step '+ typeof step + " = " + step);
 
     switch (letfRight) {
         case 'left':
             for (let i = 0; i < clearInputText.length; i++) {
-                console.log("clearInputText.length = " + clearInputText.length);
-                console.log("clearInputText[0].length = " + clearInputText[0].length);
 
                 for (let j = 0; j < clearInputText[i].length; j++) {
                     let letterIndex = letters.indexOf(clearInputText[i][j].toUpperCase());
-                    console.log(letterIndex)
 
                     if(letterIndex == 0 && clearInputText[i][j] != ' ') {
-                        console.log('letterIndex == 0');
                         res[i][j] = letters[letters.length - step];
-                        console.log(res);
                     }else if((letterIndex - step == 0) && (clearInputText[i][j] != ' ')) {
-                        console.log('letterIndex - step == 0');
                         res[i][j] = letters[0];
-                        console.log(res);
                     }else if ((letterIndex - step < 0) && (clearInputText[i][j] != ' ')) {
-                        console.log('letterIndex - step < 0');
                         while(letterIndex > -1) {
                             letterIndex--;
                         }
 
-                        console.log("letterIndex = " + letterIndex);
-                        console.log("letters.length = " + letters.length)
                         let newIndex = letters.length + letterIndex;
-                        console.log('newIndex = ' + newIndex);
                         res[i][j] = letters[newIndex];
-                        console.log(res);
                     }else if(clearInputText[i][j] == ' '){
                         res[i][j] = '*';
                     }else {
@@ -77,42 +63,31 @@ function Encrypt(clearInputText) {
                     }
                 }
             }
-            console.log("==== result ==== ");
-            console.log(res);
+
+            document.querySelector('.result-btn').addEventListener('click', ()=>{
+                var text = String.toString(res);
+                document.write(
+                    '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + encodeURIComponent(text) + '" download="text.txt">text.txt</a>'
+                )
+            });
             break;
 
         case 'right':
-            console.log('----- right -----');
 
             for (let i = 0; i < clearInputText.length; i++) {
-                console.log("clearInputText= " + clearInputText);
-                // console.log("clearInputText[0].length = " + clearInputText[0].length);
-                // console.log('letter lenght = ' + letters.length);
-                // console.log('letter[32] = ' + letters[32]);
-                console.log('begin');
+
 
                 for (let j = 0; j < clearInputText[i].length; j++) {
                     let letterIndex = letters.indexOf(clearInputText[i][j].toUpperCase());
-                    // console.log(letterIndex)
 
                     if(letterIndex == 32 && clearInputText[i][j] != ' ') {
-                        console.log('letterIndex == 0');
                         res[i][j] = letters[step-1];
-                        console.log(res);
                     }else if((letterIndex + Number.parseInt(step) == 32) && (clearInputText[i][j] != ' ')) {
-                        console.log('letterIndex + step == 32');
                         res[i][j] = letters[32];
-                        console.log(res);
                     }else if ((letterIndex + Number.parseInt(step) > 32) && (clearInputText[i][j] != ' ')) {
-                        console.log('letterIndex + step > 32');
                         let newLetterIndex = 0;
                         newLetterIndex = (letterIndex + Number.parseInt(step)) - 32;
-                        console.log("letterIndex = " + letterIndex);
-                        console.log("Step = " +  step);
-                        console.log("newLetterIndex = " + newLetterIndex);
                         res[i][j] = letters[newLetterIndex];
-                        console.log(res);
-
                     }else if(clearInputText[i][j] == ' '){
                         res[i][j] = '*';
                     }else {
@@ -120,11 +95,18 @@ function Encrypt(clearInputText) {
                     }
                 }
             }
-            console.log("==== result ==== ");
-            console.log(res);
 
+        document.querySelector('.result-btn').addEventListener('click', ()=>{
+            for(var i=0; i < res.length; i++) {
+               res[i] = res[i].join('');
+            }
+
+            document.write(
+                '<a href="data:text/plain;charset=utf-8,%EF%BB%BF' + encodeURIComponent(res) + '" download="text.txt">text.txt</a>'
+            )
+        });
         break;
     }
-
-    return outputText;
 }
+
+
